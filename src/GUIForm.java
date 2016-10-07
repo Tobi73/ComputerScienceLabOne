@@ -58,11 +58,11 @@ public class GUIForm extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 logArea.setText("");
                 resultArea.setText("");
-                if(!myValidator.isInputValid(numberToConvertArea.getText(), (Integer)initialNumeralSystemSpinner.getValue())) {
+                if (!myValidator.isInputValid(numberToConvertArea.getText(), (Integer) initialNumeralSystemSpinner.getValue())) {
                     logArea.setText("Неверный формат числа");
                     return;
                 }
-                Integer numInDecimal = myConverter.ConvertToDecimal(numberToConvertArea.getText(), (Integer) initialNumeralSystemSpinner.getValue());
+                Long numInDecimal = myConverter.ConvertToDecimal(numberToConvertArea.getText(), (Integer) initialNumeralSystemSpinner.getValue());
                 resultArea.setText(myConverter.ConvertToNumericalSys(numInDecimal, (Integer) newNumeralSystemSpinner.getValue()));
             }
         });
@@ -78,12 +78,14 @@ public class GUIForm extends JDialog {
         dispose();
     }
 
+
     public static void main(String[] args) {
         GUIForm dialog = new GUIForm();
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
     }
+
 
     private void createUIComponents() {
         // TODO: place custom component creation code here

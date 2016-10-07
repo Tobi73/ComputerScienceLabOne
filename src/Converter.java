@@ -29,8 +29,8 @@ public class Converter {
         numeralSystem.add(15, 'F');
     }
 
-    public Integer ConvertToDecimal(String numberInString, Integer numericalSystem){
-        Integer numInDecimal = 0;
+    public Long ConvertToDecimal(String numberInString, Integer numericalSystem){
+        Long numInDecimal = new Long(0);
         char[] numInCharArray = numberInString.toUpperCase().trim().toCharArray();
         Integer position = numInCharArray.length;
         for(int i = numInCharArray.length - 1; i >= 0; i--, position--){
@@ -51,15 +51,15 @@ public class Converter {
         return returnValue;
     }
 
-    public String ConvertToNumericalSys(Integer numInDecimal, Integer numericalSystem){
-        int doublePartOfNum;
+    public String ConvertToNumericalSys(Long numInDecimal, Integer numericalSystem){
+        Long doublePartOfNum;
         StringBuilder numInNewNumericalSystem = new StringBuilder();
         while(numInDecimal >= numericalSystem){
             doublePartOfNum = numInDecimal%numericalSystem;
             numInDecimal/=numericalSystem;
-            numInNewNumericalSystem.append(numeralSystem.get(doublePartOfNum));
+            numInNewNumericalSystem.append(numeralSystem.get(doublePartOfNum.intValue()));
         }
-        numInNewNumericalSystem.append(numeralSystem.get(numInDecimal));
+        numInNewNumericalSystem.append(numeralSystem.get(numInDecimal.intValue()));
         numInNewNumericalSystem.reverse();
         return numInNewNumericalSystem.toString();
     }
