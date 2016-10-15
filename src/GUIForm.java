@@ -8,12 +8,18 @@ public class GUIForm extends JDialog {
     private JSpinner initialNumeralSystemSpinner;
     private JSpinner newNumeralSystemSpinner;
     private JTextArea resultArea;
-    private JTextArea numberToConvertArea;
+    private JTextArea firstNumber;
     private JButton convertButton;
     private JTextArea logArea;
+    private JTextArea secondNumber;
+    private JButton additionButton;
+    private JButton multiplicationButton;
+    private JButton divisionButton;
 
     private Validator myValidator;
     private Converter myConverter;
+    private Addition myAddition;
+    private Subtraction mySubtraction;
 
     public GUIForm() {
         setContentPane(contentPane);
@@ -25,6 +31,8 @@ public class GUIForm extends JDialog {
 
         myValidator = new Validator();
         myConverter = new Converter();
+        myAddition = new Addition();
+        mySubtraction = new Subtraction();
 
 
         buttonOK.addActionListener(new ActionListener() {
@@ -58,14 +66,52 @@ public class GUIForm extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 logArea.setText("");
                 resultArea.setText("");
-                if (!myValidator.isInputValid(numberToConvertArea.getText(), (Integer) initialNumeralSystemSpinner.getValue())) {
+                if (!myValidator.isInputValid(firstNumber.getText(), (Integer) initialNumeralSystemSpinner.getValue())) {
                     logArea.setText("Неверный формат числа");
                     return;
                 }
-                Long numInDecimal = myConverter.ConvertToDecimal(numberToConvertArea.getText(), (Integer) initialNumeralSystemSpinner.getValue());
-                resultArea.setText(myConverter.ConvertToNumericalSys(numInDecimal, (Integer) newNumeralSystemSpinner.getValue()));
+                Long numInDecimal = myConverter.convertToDecimal(firstNumber.getText(), (Integer) initialNumeralSystemSpinner.getValue());
+                resultArea.setText(myConverter.convertToNumericalSys(numInDecimal, (Integer) newNumeralSystemSpinner.getValue()));
             }
         });
+        additionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logArea.setText("");
+                resultArea.setText("");
+                if (!myValidator.isInputValid(firstNumber.getText(), (Integer) initialNumeralSystemSpinner.getValue())) {
+                    logArea.setText("Неверный формат числа");
+                    return;
+                }
+                if (!myValidator.isInputValid(secondNumber.getText(), (Integer) newNumeralSystemSpinner.getValue())) {
+                    logArea.setText("Неверный формат числа");
+                    return;
+                }
+                String sum = "";
+                Long firstNumInDecimal = myConverter.convertToDecimal(firstNumber.getText(), (Integer) initialNumeralSystemSpinner.getValue());
+                Long secondNumInDeciaml = myConverter.convertToDecimal(secondNumber.getText(), (Integer) newNumeralSystemSpinner.getValue());
+                String firstBinaryNum = myConverter.convertToNumericalSys(firstNumInDecimal, 2);
+                String secondBinaryNum = myConverter.convertToNumericalSys(secondNumInDeciaml, 2);
+                if (firstNumInDecimal >= 0 && secondNumInDeciaml >= 0) {
+                    sum = myAddition.runAdditionOperation(firstBinaryNum, secondBinaryNum);
+                } else {
+                    Boolean isFirstBigger;
+                    if (isFirstBigger = (firstNumInDecimal < 0 && Math.abs(firstNumInDecimal) > Math.abs(secondNumInDeciaml)) || (secondNumInDeciaml < 0 && Math.abs(secondNumInDeciaml) > Math.abs(firstNumInDecimal))) {
+                        sum = mySubtraction.runSubtractionOperation(firstBinaryNum, secondBinaryNum, isFirstBigger);
+                    } else {
+                        sum = mySubtraction.runSubtractionOperation(firstBinaryNum, secondBinaryNum, isFirstBigger);
+                    }
+                }
+                resultArea.setText(sum);
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        GUIForm dialog = new GUIForm();
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
     }
 
     private void onOK() {
@@ -77,15 +123,6 @@ public class GUIForm extends JDialog {
 // add your code here if necessary
         dispose();
     }
-
-
-    public static void main(String[] args) {
-        GUIForm dialog = new GUIForm();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
-
 
     private void createUIComponents() {
         // TODO: place custom component creation code here

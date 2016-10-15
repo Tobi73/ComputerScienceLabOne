@@ -33,12 +33,17 @@ public class Addition {
         return new String(zeroes);
     }
 
+    public String runAdditionOperation(String firstBinaryNumber, String secondBinaryNumber) {
+        int maxNumLength = Math.max(firstBinaryNumber.length(), secondBinaryNumber.length());
+        firstBinaryNumber = ensureBinaryNumberLength(maxNumLength, firstBinaryNumber);
+        secondBinaryNumber = ensureBinaryNumberLength(maxNumLength, secondBinaryNumber);
+        String sum = findSum(firstBinaryNumber, secondBinaryNumber);
+        return sum;
+    }
+
      public  String findSum(String firstBinaryNumber, String secondBinaryNumber){
          char[] firstNumber = firstBinaryNumber.toCharArray();
          char[] secondNumber = secondBinaryNumber.toCharArray();
-         int binVal = 0b0001;
-         int binVal2 = 0b0001;
-         System.out.println(binVal + binVal2);
          StringBuilder sum = new StringBuilder("");
          StringBuilder tmpString = new StringBuilder();
          Boolean hasAdditionalOne = false;
@@ -61,10 +66,11 @@ public class Addition {
          return sum.toString();
      }
 
+
     /*
     public static void main(String[] args){
         String first = "001";
-        String second = "001";
+        String second = "-001";
         String sumString;
         int length = Math.max(first.length(), second.length());
         Addition sum = new Addition();

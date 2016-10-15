@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by andreyzaytsev on 15/09/16.
@@ -29,9 +30,16 @@ public class Validator {
     }
 
     public boolean isInputValid(String numberInString, Integer numeralSystem){
+        int i = 0;
+        if (numberInString.isEmpty()) {
+            return false;
+        }
         numberInString = numberInString.trim().toUpperCase();
         char[] stringInChars = numberInString.toCharArray();
-        for(int i = 0; i < stringInChars.length; i++){
+        if (stringInChars[i] == '-') {
+            i++;
+        }
+        for (; i < stringInChars.length; i++) {
             if(!this.numeralSystem.contains(stringInChars[i])){
                 return false;
             }

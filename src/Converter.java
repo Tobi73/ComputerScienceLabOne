@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.DoubleSummaryStatistics;
 import java.util.List;
 
 /**
@@ -29,13 +28,20 @@ public class Converter {
         numeralSystem.add(15, 'F');
     }
 
-    public Long ConvertToDecimal(String numberInString, Integer numericalSystem){
+    public Long convertToDecimal(String numberInString, Integer numericalSystem) {
         Long numInDecimal = new Long(0);
+        int borderIndex = 0;
         char[] numInCharArray = numberInString.toUpperCase().trim().toCharArray();
+        if (numInCharArray[0] == '-') {
+            borderIndex++;
+        }
         Integer position = numInCharArray.length;
-        for(int i = numInCharArray.length - 1; i >= 0; i--, position--){
+        for (int i = numInCharArray.length - 1; i >= borderIndex; i--, position--) {
             Integer numToConvert = numeralSystem.indexOf(numInCharArray[i])*myPow(numericalSystem, numInCharArray.length - position);
             numInDecimal+=numToConvert;
+        }
+        if (borderIndex == 1) {
+            numInDecimal *= -1;
         }
         return numInDecimal;
     }
@@ -51,7 +57,12 @@ public class Converter {
         return returnValue;
     }
 
-    public String ConvertToNumericalSys(Long numInDecimal, Integer numericalSystem){
+    public String convertToNumericalSys(Long numInDecimal, Integer numericalSystem) {
+        Boolean isNegative = false;
+        if (numInDecimal < 0) {
+            numInDecimal *= -1;
+            isNegative = true;
+        }
         Long doublePartOfNum;
         StringBuilder numInNewNumericalSystem = new StringBuilder();
         while(numInDecimal >= numericalSystem){
@@ -61,7 +72,33 @@ public class Converter {
         }
         numInNewNumericalSystem.append(numeralSystem.get(numInDecimal.intValue()));
         numInNewNumericalSystem.reverse();
+        if (isNegative) {
+            return "-" + numInNewNumericalSystem.toString();
+        }
         return numInNewNumericalSystem.toString();
     }
+
+    /*
+    public static void main(String[] args){
+        String first = "10100101010";
+        String second = "-001";
+        Converter conv = new Converter();
+        Addition add = new Addition();
+        first = conv.turnBinaryNumNegative(first);
+        int maxLength = Math.max(first.length(), second.length());
+        int minLength = Math.min(first.length(), second.length());
+        int length = maxLength - minLength;
+
+        StringBuilder sum = new StringBuilder(add.findSum(first, second));
+        sum.deleteCharAt(0);
+        second = conv.turnBinaryNumNegative(second, length);
+        System.out.println(Integer.toString(maxLength));
+        System.out.println(Integer.toString(minLength));
+        System.out.println(Integer.toString(length));
+        System.out.println(first);
+        System.out.println(second);
+        System.out.println(sum);
+    }
+    */
 
 }
