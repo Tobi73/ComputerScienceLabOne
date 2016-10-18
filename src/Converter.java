@@ -28,6 +28,19 @@ public class Converter {
         numeralSystem.add(15, 'F');
     }
 
+    public static String ensureBinaryNumForm(String binaryNum) {
+        StringBuilder stringToBuild = new StringBuilder(binaryNum);
+        int numOfZeroes = 0;
+        for (int i = 0; i < stringToBuild.length() - 1; i++) {
+            if (stringToBuild.charAt(i) == '1') {
+                break;
+            }
+            numOfZeroes++;
+        }
+        stringToBuild.delete(0, numOfZeroes);
+        return stringToBuild.toString();
+    }
+
     public Long convertToDecimal(String numberInString, Integer numericalSystem) {
         Long numInDecimal = new Long(0);
         int borderIndex = 0;
@@ -77,6 +90,14 @@ public class Converter {
         }
         return numInNewNumericalSystem.toString();
     }
+
+    /*
+    public static void main(String[] args){
+        String string1 = "00010000101";
+        string1 = Converter.ensureBinaryNumForm(string1);
+        System.out.println(string1);
+    }
+    */
 
     /*
     public static void main(String[] args){

@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -20,6 +22,8 @@ public class GUIForm extends JDialog {
     private Converter myConverter;
     private Addition myAddition;
     private Subtraction mySubtraction;
+    private Multiplication myMultiplication;
+    private Division myDivision;
 
     public GUIForm() {
         setContentPane(contentPane);
@@ -33,6 +37,8 @@ public class GUIForm extends JDialog {
         myConverter = new Converter();
         myAddition = new Addition();
         mySubtraction = new Subtraction();
+        myMultiplication = new Multiplication();
+        myDivision = new Division();
 
 
         buttonOK.addActionListener(new ActionListener() {
@@ -103,6 +109,58 @@ public class GUIForm extends JDialog {
                     }
                 }
                 resultArea.setText(sum);
+            }
+        });
+        multiplicationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logArea.setText("");
+                resultArea.setText("");
+                if (!myValidator.isInputValid(firstNumber.getText(), (Integer) initialNumeralSystemSpinner.getValue())) {
+                    logArea.setText("Неверный формат числа");
+                    return;
+                }
+                if (!myValidator.isInputValid(secondNumber.getText(), (Integer) newNumeralSystemSpinner.getValue())) {
+                    logArea.setText("Неверный формат числа");
+                    return;
+                }
+                String multiplication = "";
+                Long firstNumInDecimal = myConverter.convertToDecimal(firstNumber.getText(), (Integer) initialNumeralSystemSpinner.getValue());
+                Long secondNumInDeciaml = myConverter.convertToDecimal(secondNumber.getText(), (Integer) newNumeralSystemSpinner.getValue());
+                String firstBinaryNum = myConverter.convertToNumericalSys(firstNumInDecimal, 2);
+                String secondBinaryNum = myConverter.convertToNumericalSys(secondNumInDeciaml, 2);
+                multiplication = myMultiplication.runMultiplicationOperation(firstBinaryNum, secondBinaryNum);
+                resultArea.setText(multiplication);
+            }
+        });
+        divisionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                resultArea.setText("");
+                if (!myValidator.isInputValid(firstNumber.getText(), (Integer) initialNumeralSystemSpinner.getValue())) {
+                    logArea.setText("Неверный формат числа");
+                    return;
+                }
+                if (!myValidator.isInputValid(secondNumber.getText(), (Integer) newNumeralSystemSpinner.getValue())) {
+                    logArea.setText("Неверный формат числа");
+                    return;
+                }
+                Boolean isFirstBigger = true;
+                Pair<String, String> division;
+                Long firstNumInDecimal = myConverter.convertToDecimal(firstNumber.getText(), (Integer) initialNumeralSystemSpinner.getValue());
+                Long secondNumInDeciaml = myConverter.convertToDecimal(secondNumber.getText(), (Integer) newNumeralSystemSpinner.getValue());
+                if (Math.abs(firstNumInDecimal) < Math.abs(secondNumInDeciaml)) {
+                    isFirstBigger = false;
+                }
+                String firstBinaryNum = myConverter.convertToNumericalSys(firstNumInDecimal, 2);
+                String secondBinaryNum = myConverter.convertToNumericalSys(secondNumInDeciaml, 2);
+                if (isFirstBigger) {
+                    division = myDivision.runDivisionOperation(firstBinaryNum, secondBinaryNum);
+                } else {
+                    division = new Pair<>("0", firstBinaryNum);
+                }
+                resultArea.setText(division.getKey());
+                logArea.setText(division.getValue());
             }
         });
     }

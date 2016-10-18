@@ -48,23 +48,18 @@ public class Subtraction {
         }
         secondNum.deleteCharAt(0);
         int length;
+        length = Math.max(secondNum.length(), firstNum.length());
+        length += 2;
+        firstNum = new StringBuilder(additionModule.ensureBinaryNumberLength(length, firstNum.toString()));
+        secondNum = new StringBuilder(additionModule.ensureBinaryNumberLength(length, secondNum.toString()));
         if (!firstIsBigger) {
-            length = Math.max(secondNum.length(), firstNum.length());
-            length += 2;
-            firstNum = new StringBuilder(additionModule.ensureBinaryNumberLength(length, firstNum.toString()));
-            secondNum = new StringBuilder(additionModule.ensureBinaryNumberLength(length, secondNum.toString()));
             secondNum.replace(1, 2, "1");
             secondNum = new StringBuilder(makeReversion(secondNum.toString()));
             secondNum = new StringBuilder(additionModule.runAdditionOperation(secondNum.toString(), "1"));
             StringBuilder sumToBuild = new StringBuilder(additionModule.runAdditionOperation(firstNum.toString(), secondNum.toString()));
-            sumToBuild.delete(0, 2);
+            sumToBuild.delete(0, 1);
             sum = sumToBuild.toString();
         } else {
-            System.out.println("I'm here!");
-            length = Math.max(secondNum.length(), firstNum.length());
-            length += 2;
-            firstNum = new StringBuilder(additionModule.ensureBinaryNumberLength(length, firstNum.toString()));
-            secondNum = new StringBuilder(additionModule.ensureBinaryNumberLength(length, secondNum.toString()));
             firstNum.replace(0, 1, "1");
             secondNum.replace(1, 2, "1");
             secondNum = new StringBuilder(makeReversion(secondNum.toString()));

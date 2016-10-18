@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class Addition {
 
-    Map<String, Pair<Character, Boolean>> binarySummingMap;
+    private Map<String, Pair<Character, Boolean>> binarySummingMap;
 
     public Addition(){
         binarySummingMap = new HashMap<>();
@@ -21,6 +21,17 @@ public class Addition {
         binarySummingMap.put("110", new Pair<>('0', true));
         binarySummingMap.put("101", new Pair<>('0', true));
         binarySummingMap.put("111", new Pair<>('1', true));
+    }
+
+    public static char singleBitXOR(char firstBit, char secondBit) {
+        if ((firstBit != '0' & secondBit != '0') & (firstBit != '1' & secondBit != '1')) {
+            throw new NumberFormatException();
+        }
+        if (firstBit == secondBit) {
+            return '0';
+        } else {
+            return '1';
+        }
     }
 
     public String ensureBinaryNumberLength(int numLength, String secondBinaryNum){
