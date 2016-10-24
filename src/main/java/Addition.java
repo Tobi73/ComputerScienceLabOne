@@ -78,21 +78,4 @@ public class Addition {
      }
 
 
-    /*
-    public static void main(String[] args){
-        String first = "001";
-        String second = "-001";
-        String sumString;
-        int length = Math.max(first.length(), second.length());
-        Addition sum = new Addition();
-        first = sum.ensureBinaryNumberLength(length, first);
-        second = sum.ensureBinaryNumberLength(length, second);
-        sumString = sum.findSum(first, second);
-        System.out.println(first);
-        System.out.println(second);
-        System.out.println(sumString);
-    }
-    */
-
-
 }

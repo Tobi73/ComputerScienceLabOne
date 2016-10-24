@@ -21,14 +21,6 @@ public class Multiplication {
         }
     }
 
-    public static void main(String[] args) {
-        Multiplication myAppl = new Multiplication();
-        String string1 = "-1110";
-        String string2 = "1011";
-        String result = myAppl.runMultiplicationOperation(string1, string2);
-        System.out.println(result);
-    }
-
     public String runMultiplicationOperation(String firstBinaryNum, String secondBinaryNum) {
         char firstBinaryNumSignBit = '0';
         char secondBinaryNumSignBit = '0';

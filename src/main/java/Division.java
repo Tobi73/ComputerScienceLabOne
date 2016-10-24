@@ -23,13 +23,6 @@ public class Division {
         this.converterModule = new Converter();
     }
 
-    public static void main(String[] args) {
-        Division test = new Division();
-        test.runDivisionOperation("-1011010", "01010");
-        test.runDivisionOperation("110011", "-1010");
-        test.runDivisionOperation("-1011", "101");
-    }
-
     public Pair<String, String> runDivisionOperation(String firstBinaryNum, String secondBinaryNum) {
         char firstBinaryNumSignBit = '0';
         char secondBinaryNumSignBit = '0';

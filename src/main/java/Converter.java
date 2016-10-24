@@ -91,35 +91,4 @@ public class Converter {
         return numInNewNumericalSystem.toString();
     }
 
-    /*
-    public static void main(String[] args){
-        String string1 = "00010000101";
-        string1 = Converter.ensureBinaryNumForm(string1);
-        System.out.println(string1);
-    }
-    */
-
-    /*
-    public static void main(String[] args){
-        String first = "10100101010";
-        String second = "-001";
-        Converter conv = new Converter();
-        Addition add = new Addition();
-        first = conv.turnBinaryNumNegative(first);
-        int maxLength = Math.max(first.length(), second.length());
-        int minLength = Math.min(first.length(), second.length());
-        int length = maxLength - minLength;
-
-        StringBuilder sum = new StringBuilder(add.findSum(first, second));
-        sum.deleteCharAt(0);
-        second = conv.turnBinaryNumNegative(second, length);
-        System.out.println(Integer.toString(maxLength));
-        System.out.println(Integer.toString(minLength));
-        System.out.println(Integer.toString(length));
-        System.out.println(first);
-        System.out.println(second);
-        System.out.println(sum);
-    }
-    */
-
 }
